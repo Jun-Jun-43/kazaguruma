@@ -3,7 +3,6 @@ use bevy::{
         bloom::{BloomCompositeMode, BloomPrefilterSettings, BloomSettings},
         tonemapping::Tonemapping,
     },
-    ecs::system::EntityCommands,
     prelude::*,
     render::{
         mesh::{Indices, VertexAttributeValues},
@@ -29,7 +28,7 @@ fn main() {
         }))
         .add_systems(Startup, (setup, directional_light_setup, camera_setup))
         .add_systems(Update, (rotate, animate_light_direction))
-        .add_systems(PostUpdate, screenshots)
+        // .add_systems(PostUpdate, screenshots)
         .run();
 }
 
@@ -42,8 +41,8 @@ const CAMERA_ANIMATION_DURATION: f32 = 0.8;
 struct Wing;
 
 impl Wing {
-    fn new<'w, 's, 'a>(
-        commands: &'a mut Commands<'w, 's>,
+    fn new(
+        commands: & mut Commands,
         meshes: &mut ResMut<Assets<Mesh>>,
         materials: &mut ResMut<Assets<StandardMaterial>>,
         att_position: VertexAttributeValues,
@@ -147,7 +146,7 @@ fn setup(
 
 fn directional_light_setup(mut commands: Commands) {
     commands.spawn(DirectionalLightBundle {
-        transform: Transform::from_xyz(0.0, 0.0, 10.0),
+        transform: Transform::from_xyz(0.0, 0.0, 5.0),
         directional_light: DirectionalLight {
             color: LED_WHITE,
             illuminance: 10000.0,
@@ -161,7 +160,7 @@ fn directional_light_setup(mut commands: Commands) {
 fn point_light_setup(commands: &mut Commands, color: Color, transform_x: f32, transform_y: f32) {
     info!(transform_x);
     commands.spawn(SpotLightBundle {
-        transform: Transform::from_xyz(transform_x, transform_y, 5.0),
+        transform: Transform::from_xyz(transform_x, transform_y, 0.0),
         spot_light: SpotLight {
             color: color,
             intensity: 80000.0,
@@ -180,7 +179,7 @@ fn camera_setup(mut commands: Commands) {
                 ..default()
             },
             tonemapping: Tonemapping::TonyMcMapface,
-            transform: Transform::from_xyz(0.0, 0.0, 20.0)
+            transform: Transform::from_xyz(0.0, 0.0, 10.0)
                 .looking_at(Vec3::new(0.0, 0.0, 0.0), Vec3::Y),
             ..default()
         },
