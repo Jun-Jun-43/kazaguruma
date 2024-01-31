@@ -28,12 +28,12 @@ fn main() {
         }))
         .add_systems(Startup, (setup, directional_light_setup, camera_setup))
         .add_systems(Update, (rotate, animate_light_direction))
-        // .add_systems(PostUpdate, screenshots)
+        .add_systems(PostUpdate, screenshots)
         .run();
 }
 
 const SHINY_METALLIC_BLUE: Color = Color::rgb_linear(55.0 / 256.0, 48.0 / 256.0, 242.0 / 256.0);
-const CIRCUIT_BOARD_GREEN: Color = Color::rgb_linear(65.0 / 256.0, 191.0 / 256.0, 73.0 / 256.0);
+// const CIRCUIT_BOARD_GREEN: Color = Color::rgb_linear(65.0 / 256.0, 191.0 / 256.0, 73.0 / 256.0);
 const LED_WHITE: Color = Color::rgb_linear(242.0 / 242.0, 242.0 / 242.0, 242.0);
 const CAMERA_ANIMATION_DURATION: f32 = 0.8;
 
